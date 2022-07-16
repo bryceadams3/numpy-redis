@@ -5,14 +5,14 @@ import pickle
 
 class Array:
 
-    def __init__(self) :
+    def __init__(self, name: string, array: np.array) :
         self.name = string
         self.array = np.array
 
-    def read(name: string):
+    def read(r, name: string):
 
         
-        r = redis.StrictRedis(host='localhost', port=12000, db=0)
+        
         value = r.get(name)
         shape = r.get(name + "shape")
         
@@ -23,9 +23,7 @@ class Array:
         response = print(reshaped)
         return response
 
-    def create(name: string, array: np.array):
-
-        r = redis.StrictRedis(host='localhost', port=12000, db=0)
+    def create(r, name: string, array: np.array):
 
         def toRedis(r,array,name):
             """Store given Numpy array 'a' in Redis under key 'n'"""
@@ -50,24 +48,9 @@ class Array:
 
         return response
 
-    def delete(name: string):
-
-        r = redis.StrictRedis(host='localhost', port=12000, db=0)
+    def delete(r, name: string):
 
         r.delete(name)
 
         response = print("Array has been deleted")
         return response
-
-
-
-# Testing code
-# Testing array create method
-test_data = np.array([[2, 3, 3, 4],
-                     [3, 4, 2, 2]])
-
-Array.create("test_array", test_data)
-Array.read("test_array")
-
-Array.delete("test_array")
-
